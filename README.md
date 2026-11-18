@@ -1,6 +1,14 @@
 # News App
 
-Android app pulling news from https://newsapi.org/
+Android app pulling news from https://newsapi.org/. This application was developed using Kotlin, Jetpack Compose, Material 3, and MVVM.
+
+## Download APK
+
+**Version:** 1.0.0 (MVP)
+
+[Download Android APK](https://github.com/chris-tinaa/news-app/releases/download/v1.0.0/news-app-v1.0.0.apk)
+
+**Requirements:** Android 8.0 (API 26) or newer.
 
 
 ## MVVM Architecture
