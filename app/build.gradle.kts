@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -14,6 +16,20 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
+
+        val localProperties = Properties().apply {
+            rootProject.file("local.properties").takeIf { it.exists() }
+                ?.inputStream()?.use(::load)
+        }
+        buildConfigField(
+            "String",
+            "NEWS_API_KEY",
+            "\"${localProperties.getProperty("NEWS_API_KEY").orEmpty()}\""
+        )
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
