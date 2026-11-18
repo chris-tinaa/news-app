@@ -4,12 +4,8 @@ Android app pulling news from https://newsapi.org/. This application was develop
 
 ## Download APK
 
-**Version:** 1.0.0 (MVP)
-
-[Download Android APK](https://github.com/chris-tinaa/news-app/releases/download/v1.0.0/news-app-v1.0.0.apk)
-
+[Download Android APK](https://github.com/chris-tinaa/news-app/releases/download/v1.0.1/news-app-v1.0.1.apk)
 **Requirements:** Android 8.0 (API 26) or newer.
-
 
 ## MVVM Architecture
 
