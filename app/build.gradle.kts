@@ -7,6 +7,15 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
+val localProperties = Properties().apply {
+    rootProject.file("local.properties").takeIf { it.exists() }
+        ?.inputStream()?.use(::load)
+}
+
+fun requireProperty(name: String): String =
+    localProperties.getProperty(name)
+        ?: throw GradleException("$name is missing from local.properties")
+
 android {
     namespace = "com.example.news_app"
     compileSdk = 37
@@ -18,15 +27,20 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        val localProperties = Properties().apply {
-            rootProject.file("local.properties").takeIf { it.exists() }
-                ?.inputStream()?.use(::load)
-        }
         buildConfigField(
             "String",
             "NEWS_API_KEY",
             "\"${localProperties.getProperty("NEWS_API_KEY").orEmpty()}\""
         )
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(requireProperty("RELEASE_STORE_FILE"))
+            storePassword = requireProperty("RELEASE_STORE_PASSWORD")
+            keyAlias = requireProperty("RELEASE_KEY_ALIAS")
+            keyPassword = requireProperty("RELEASE_KEY_PASSWORD")
+        }
     }
 
     buildFeatures {
@@ -35,7 +49,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
