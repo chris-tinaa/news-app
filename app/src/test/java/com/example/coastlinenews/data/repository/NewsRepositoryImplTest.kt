@@ -1,13 +1,13 @@
-package com.example.coastlinenews.data.repository
+package com.example.news_app.data.repository
 
-import com.example.coastlinenews.data.remote.MissingApiKeyException
-import com.example.coastlinenews.data.remote.NewsApiException
-import com.example.coastlinenews.data.remote.NewsApiService
-import com.example.coastlinenews.data.remote.model.ArticlesResponse
-import com.example.coastlinenews.data.remote.model.NewsArticleDto
-import com.example.coastlinenews.data.remote.model.NewsSourceDto
-import com.example.coastlinenews.data.remote.model.SourcesResponse
-import com.example.coastlinenews.data.remote.model.SourceRefDto
+import com.example.news_app.data.remote.MissingApiKeyException
+import com.example.news_app.data.remote.NewsApiException
+import com.example.news_app.data.remote.NewsApiService
+import com.example.news_app.data.remote.model.ArticlesResponse
+import com.example.news_app.data.remote.model.NewsArticleDto
+import com.example.news_app.data.remote.model.NewsSourceDto
+import com.example.news_app.data.remote.model.SourcesResponse
+import com.example.news_app.data.remote.model.SourceRefDto
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows

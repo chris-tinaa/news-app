@@ -1,7 +1,7 @@
-package com.example.coastlinenews.domain.repository
+package com.example.news_app.domain.repository
 
-import com.example.coastlinenews.domain.model.ArticlePage
-import com.example.coastlinenews.domain.model.NewsSource
+import com.example.news_app.domain.model.ArticlePage
+import com.example.news_app.domain.model.NewsSource
 
 interface NewsRepository {
     suspend fun getSources(category: String): List<NewsSource>

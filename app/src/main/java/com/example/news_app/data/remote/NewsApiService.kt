@@ -1,7 +1,7 @@
-package com.example.coastlinenews.data.remote
+package com.example.news_app.data.remote
 
-import com.example.coastlinenews.data.remote.model.ArticlesResponse
-import com.example.coastlinenews.data.remote.model.SourcesResponse
+import com.example.news_app.data.remote.model.ArticlesResponse
+import com.example.news_app.data.remote.model.SourcesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

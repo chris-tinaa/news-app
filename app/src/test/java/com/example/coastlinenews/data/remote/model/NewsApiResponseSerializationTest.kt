@@ -1,4 +1,4 @@
-package com.example.coastlinenews.data.remote.model
+package com.example.news_app.data.remote.model
 
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals

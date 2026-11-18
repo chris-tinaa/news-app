@@ -1,14 +1,14 @@
-package com.example.coastlinenews.data.repository
+package com.example.news_app.data.repository
 
-import com.example.coastlinenews.data.remote.MissingApiKeyException
-import com.example.coastlinenews.data.remote.NewsApiException
-import com.example.coastlinenews.data.remote.NewsApiService
-import com.example.coastlinenews.data.remote.model.ArticlesResponse
-import com.example.coastlinenews.data.remote.model.SourcesResponse
-import com.example.coastlinenews.data.remote.toDomain
-import com.example.coastlinenews.domain.model.ArticlePage
-import com.example.coastlinenews.domain.model.NewsSource
-import com.example.coastlinenews.domain.repository.NewsRepository
+import com.example.news_app.data.remote.MissingApiKeyException
+import com.example.news_app.data.remote.NewsApiException
+import com.example.news_app.data.remote.NewsApiService
+import com.example.news_app.data.remote.model.ArticlesResponse
+import com.example.news_app.data.remote.model.SourcesResponse
+import com.example.news_app.data.remote.toDomain
+import com.example.news_app.domain.model.ArticlePage
+import com.example.news_app.domain.model.NewsSource
+import com.example.news_app.domain.repository.NewsRepository
 
 class NewsRepositoryImpl(
     private val api: NewsApiService,

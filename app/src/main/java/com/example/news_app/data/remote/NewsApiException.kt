@@ -1,4 +1,4 @@
-package com.example.coastlinenews.data.remote
+package com.example.news_app.data.remote
 
 class MissingApiKeyException : IllegalStateException()
 

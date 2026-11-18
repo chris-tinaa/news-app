@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.compose.ui.platform.LocalContext
-import com.example.coastlinenews.ui.theme.CoastlineNewsTheme
+import com.example.news_app.ui.theme.CoastlineNewsTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

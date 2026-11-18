@@ -1,4 +1,4 @@
-package com.example.coastlinenews.domain.model
+package com.example.news_app.domain.model
 
 data class NewsSource(
     val id: String,

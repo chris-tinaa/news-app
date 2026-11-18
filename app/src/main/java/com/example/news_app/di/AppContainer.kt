@@ -1,9 +1,9 @@
-package com.example.coastlinenews.di
+package com.example.news_app.di
 
-import com.example.coastlinenews.data.remote.ApiKeyInterceptor
-import com.example.coastlinenews.data.remote.NewsApiService
-import com.example.coastlinenews.data.repository.NewsRepositoryImpl
-import com.example.coastlinenews.domain.repository.NewsRepository
+import com.example.news_app.data.remote.ApiKeyInterceptor
+import com.example.news_app.data.remote.NewsApiService
+import com.example.news_app.data.repository.NewsRepositoryImpl
+import com.example.news_app.domain.repository.NewsRepository
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.MediaType.Companion.toMediaType

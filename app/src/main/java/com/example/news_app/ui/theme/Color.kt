@@ -1,4 +1,4 @@
-package com.example.coastlinenews.ui.theme
+package com.example.news_app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

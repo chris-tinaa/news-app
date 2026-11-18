@@ -1,8 +1,8 @@
-package com.example.coastlinenews.data.remote
+package com.example.news_app.data.remote
 
-import com.example.coastlinenews.data.remote.model.NewsArticleDto
-import com.example.coastlinenews.data.remote.model.NewsSourceDto
-import com.example.coastlinenews.data.remote.model.SourceRefDto
+import com.example.news_app.data.remote.model.NewsArticleDto
+import com.example.news_app.data.remote.model.NewsSourceDto
+import com.example.news_app.data.remote.model.SourceRefDto
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -24,7 +24,7 @@ class NewsApiMappersTest {
         val source = dto.toDomain()
 
         assertEquals(
-            com.example.coastlinenews.domain.model.NewsSource(
+            com.example.news_app.domain.model.NewsSource(
                 id = "bbc-news",
                 name = "BBC News",
                 description = "Trusted world news",

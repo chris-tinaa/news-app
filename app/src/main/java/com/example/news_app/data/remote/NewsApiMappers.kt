@@ -1,9 +1,9 @@
-package com.example.coastlinenews.data.remote
+package com.example.news_app.data.remote
 
-import com.example.coastlinenews.data.remote.model.NewsArticleDto
-import com.example.coastlinenews.data.remote.model.NewsSourceDto
-import com.example.coastlinenews.domain.model.NewsArticle
-import com.example.coastlinenews.domain.model.NewsSource
+import com.example.news_app.data.remote.model.NewsArticleDto
+import com.example.news_app.data.remote.model.NewsSourceDto
+import com.example.news_app.domain.model.NewsArticle
+import com.example.news_app.domain.model.NewsSource
 
 fun NewsSourceDto.toDomain(): NewsSource? {
     val sourceId = id?.takeIf { it.isNotBlank() } ?: return null
