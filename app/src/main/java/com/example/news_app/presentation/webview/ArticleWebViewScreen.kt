@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.news_app.presentation.common.ErrorState
+import com.example.news_app.presentation.common.isHttpsUrl
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
@@ -66,7 +67,7 @@ fun ArticleWebViewScreen(
             )
         }
     ) { paddingValues ->
-        if (!url.startsWith("https://")) {
+        if (!isHttpsUrl(url)) {
             ErrorState(
                 message = "This article does not have a valid HTTPS link.",
                 onRetry = onBack,

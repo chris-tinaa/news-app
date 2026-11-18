@@ -13,6 +13,24 @@ class CategoryViewModelTest {
     }
 
     @Test
+    fun `all seven categories are displayed`() {
+        val ids = CategoryViewModel().categories.map { it.id }
+
+        assertEquals(
+            listOf(
+                "business",
+                "entertainment",
+                "general",
+                "health",
+                "science",
+                "sports",
+                "technology"
+            ),
+            ids
+        )
+    }
+
+    @Test
     fun `categories have unique non blank identifiers and titles`() {
         val categories = CategoryViewModel().categories
 

@@ -4,6 +4,7 @@ import com.example.news_app.data.remote.MissingApiKeyException
 import com.example.news_app.domain.model.ArticlePage
 import com.example.news_app.domain.model.NewsSource
 import com.example.news_app.domain.repository.NewsRepository
+import com.example.news_app.testing.httpException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -116,6 +117,44 @@ class SourcesViewModelTest {
         viewModel.loadMore()
 
         assertEquals(8, viewModel.uiState.value.visibleCount)
+    }
+
+    @Test
+    fun `empty source list is not an error`() = runTest(dispatcher) {
+        repository.sources = emptyList()
+
+        val viewModel = SourcesViewModel(repository, category = "general")
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertNull(state.error)
+        assertFalse(state.isLoading)
+        assertTrue(state.allSources.isEmpty())
+        assertTrue(state.visibleSources.isEmpty())
+        assertFalse(state.canLoadMore)
+    }
+
+    @Test
+    fun `http 401 exposes unauthorized access`() = runTest(dispatcher) {
+        repository.error = httpException(401)
+
+        val viewModel = SourcesViewModel(repository, category = "general")
+        advanceUntilIdle()
+
+        assertEquals("Unauthorized Access", viewModel.uiState.value.error)
+    }
+
+    @Test
+    fun `http 429 exposes rate limit message`() = runTest(dispatcher) {
+        repository.error = httpException(429)
+
+        val viewModel = SourcesViewModel(repository, category = "general")
+        advanceUntilIdle()
+
+        assertEquals(
+            "Rate limit has been reached. Try again later.",
+            viewModel.uiState.value.error
+        )
     }
 
     private fun source(name: String) = NewsSource(

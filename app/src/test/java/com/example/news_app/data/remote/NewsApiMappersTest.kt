@@ -49,7 +49,8 @@ class NewsApiMappersTest {
 
     @Test
     fun `source blank optional fields become empty strings`() {
-        val source = NewsSourceDto(id = "abc", name = "ABC", description = null, url = null) .toDomain()
+        val source = NewsSourceDto(id = "abc", name = "ABC", description = null, url = null)
+            .toDomain()
 
         assertEquals("", source?.description)
         assertEquals("", source?.url)

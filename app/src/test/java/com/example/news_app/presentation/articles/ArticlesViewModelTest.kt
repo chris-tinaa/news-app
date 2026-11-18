@@ -5,6 +5,7 @@ import com.example.news_app.domain.model.ArticlePage
 import com.example.news_app.domain.model.NewsArticle
 import com.example.news_app.domain.model.NewsSource
 import com.example.news_app.domain.repository.NewsRepository
+import com.example.news_app.testing.httpException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -21,6 +22,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.io.IOException
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ArticlesViewModelTest {
@@ -250,6 +252,78 @@ class ArticlesViewModelTest {
         assertEquals(40, state.totalResults)
         assertTrue(state.hasMore)
         assertNull(state.error)
+    }
+
+    @Test
+    fun `empty search result shows no articles and stops paging`() = runTest(dispatcher) {
+        repository.pages[1] = page(totalResults = 0, articles = emptyList())
+
+        val viewModel = ArticlesViewModel(repository, "bbc-news", "BBC News")
+        advanceUntilIdle()
+
+        viewModel.onQueryChanged("nothing matches this")
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertEquals("nothing matches this", state.query)
+        assertEquals(Request("bbc-news", "nothing matches this", 1), repository.requests.last())
+        assertTrue(state.articles.isEmpty())
+        assertFalse(state.hasMore)
+        assertNull(state.error)
+    }
+
+    @Test
+    fun `invalid api key exposes unauthorized access`() = runTest(dispatcher) {
+        repository.error = httpException(401)
+
+        val viewModel = ArticlesViewModel(repository, "bbc-news", "BBC News")
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertEquals("Unauthorized Access", state.error)
+        assertFalse(state.isLoading)
+        assertTrue(state.articles.isEmpty())
+    }
+
+    @Test
+    fun `rate limited request exposes rate limit message`() = runTest(dispatcher) {
+        repository.error = httpException(429)
+
+        val viewModel = ArticlesViewModel(repository, "bbc-news", "BBC News")
+        advanceUntilIdle()
+
+        assertEquals(
+            "Rate limit has been reached. Try again later.",
+            viewModel.uiState.value.error
+        )
+    }
+
+    @Test
+    fun `load more failure during rate limit keeps loaded articles`() = runTest(dispatcher) {
+        repository.pages[1] = page(totalResults = 60, articles = listOf(article("a")))
+
+        val viewModel = ArticlesViewModel(repository, "bbc-news", "BBC News")
+        advanceUntilIdle()
+
+        repository.error = httpException(429)
+        viewModel.loadMore()
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertEquals(listOf("a"), state.articles.map { it.url })
+        assertEquals("Rate limit has been reached. Try again later.", state.error)
+        assertFalse(state.isLoadingMore)
+    }
+
+    @Test
+    fun `network error exposes no internet message`() = runTest(dispatcher) {
+        repository.error = IOException("offline")
+
+        val viewModel = ArticlesViewModel(repository, "bbc-news", "BBC News")
+        advanceUntilIdle()
+
+        assertEquals("No internet connection", viewModel.uiState.value.error)
+        assertFalse(viewModel.uiState.value.isLoading)
     }
 
     private fun article(url: String) = NewsArticle(

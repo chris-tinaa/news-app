@@ -49,6 +49,7 @@ import com.example.news_app.presentation.common.LoadingFooter
 import com.example.news_app.presentation.common.LoadingState
 import com.example.news_app.presentation.common.SearchField
 import com.example.news_app.presentation.common.formatPublishedAt
+import com.example.news_app.presentation.common.isHttpsUrl
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable
@@ -172,7 +173,7 @@ private fun ArticleCard(
     onClick: () -> Unit
 ) {
     val validUrl = remember(article.url) {
-        article.url.startsWith("https://")
+        isHttpsUrl(article.url)
     }
     ElevatedCard(
         onClick = onClick,
