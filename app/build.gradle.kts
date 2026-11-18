@@ -2,6 +2,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id("jacoco")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
@@ -84,4 +85,25 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+}
+
+jacoco {
+    toolVersion = "0.8.13"
+}
+
+tasks.register<JacocoReport>("jacocoTestReportDebug") {
+    dependsOn("testDebugUnitTest")
+    reports {
+        xml.required = true
+        html.required = true
+    }
+    classDirectories.setFrom(
+        fileTree(layout.buildDirectory.dir("intermediates/built_in_kotlinc/debug/compileDebugKotlin/classes")) {
+            exclude("**/BuildConfig.*", "**/R.class", "**/R$*.class")
+        }
+    )
+    sourceDirectories.setFrom(files("src/main/java"))
+    executionData.setFrom(fileTree(layout.buildDirectory.dir("jacoco")) {
+        include("testDebugUnitTest.exec")
+    })
 }
